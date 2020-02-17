@@ -45,3 +45,6 @@ class TwitterHandler:
         stream = tw.Stream(auth=self.auth, listener=stream_listener)
         stream.filter(**kwargs)
         return stream
+
+    def tweet(self, text):
+        self.api.update_status(status=text)

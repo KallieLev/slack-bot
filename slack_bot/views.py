@@ -20,3 +20,10 @@ def new_content_of_python_pages():
     if not resp:
         return jsonify({'text': 'sorry no new content'})
     return jsonify({'text': resp})
+
+
+@app.route('/tweet', methods=['POST'])
+def tweet():
+    text = request.form['text']
+    resp = bot.tweet(text)
+    return jsonify({'text': resp})

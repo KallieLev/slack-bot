@@ -34,3 +34,14 @@ class Bot:
                                                        config.slack_default_channel)
         self.twitter_handler.create_stream_from_listener(stream_listener, follow=[str(config.twitter_my_id)],
                                                          is_async=True)
+
+    def tweet(self, text):
+        if not text:
+            return 'cannot tweet empty text'
+
+        try:
+            self.twitter_handler.tweet(text)
+            return 'tweeted!'
+
+        except Exception:
+            return 'could not tweet the text'
