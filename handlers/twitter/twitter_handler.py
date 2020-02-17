@@ -10,21 +10,21 @@ class TwitterHandler:
         self.auth.set_access_token(config.twitter_access_token, config.twitter_access_token_secret)
         self.api = tw.API(self.auth)
 
-    def get_user_statuses(self, user_id: int, count=20, page=1) -> list:
-        return self.api.user_timeline(user_id=user_id, count=count, page=page)
+    def get_user_statuses(self, **kwargs) -> list:
+        return self.api.user_timeline(**kwargs)
 
-    def get_user_tweets_from_date(self, user_id: int, from_date: datetime) -> list:
+    def get_tweets_from_date(self, from_date: datetime, **kwargs) -> list:
         tweets = []
         page = 1
         i = 0
-        tmp_tweets = self.get_user_statuses(user_id)
+        tmp_tweets = self.get_user_statuses(**kwargs)
         curr_tweet = tmp_tweets[0]
         while curr_tweet.created_at > from_date:
             tweets.append(curr_tweet)
             # if this is the last tweet in the bulk, get next bulk
             if i == len(tmp_tweets) - 1:
                 page += 1
-                tmp_tweets = self.get_user_statuses(user_id, page)
+                tmp_tweets = self.get_user_statuses(page=page, **kwargs)
                 i = 0
             else:
                 i += 1
@@ -35,7 +35,7 @@ class TwitterHandler:
     def get_users_tweets_from_date(self, users_id: dict, from_date: datetime) -> dict:
         tweets = {}
         for user_name, user_id in users_id.items():
-            tweets[user_name] = self.get_user_tweets_from_date(user_id, from_date)
+            tweets[user_name] = self.get_tweets_from_date(from_date, user_id=user_id)
         return tweets
 
     def get_user_id_by_name(self, user_name):

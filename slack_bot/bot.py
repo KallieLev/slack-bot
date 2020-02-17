@@ -9,8 +9,8 @@ class Bot:
     def __init__(self):
         self.twitter_handler = TwitterHandler()
 
-    def new_content(self):
-        tweets = self.twitter_handler.get_users_tweets_from_date(config.twitter_users_id,
+    def new_content_from_users_id(self, users_id):
+        tweets = self.twitter_handler.get_users_tweets_from_date(users_id,
                                                                  datetime.utcnow() - timedelta(hours=1))
         resp = []
         for user, user_tweets in tweets.items():
@@ -19,6 +19,14 @@ class Bot:
                 resp.append('\n----------------\n'.join(user_tweets))
 
         return '\n'.join(resp)
+
+    def new_content(self, text):
+        if not text:
+            return self.new_content_from_users_id(config.twitter_python_ids)
+        try:
+            return self.new_content_from_users_id(config.twitter_languages_ids[text.lower()])
+        except KeyError:
+            return 'sorry, this programming language is not followed by us'
 
     def create_my_streaming_session(self):
         stream_listener = StreamListenerToSlackChannel(config.base_url + config.send_message_endpoint,
