@@ -1,8 +1,9 @@
-from flask import Flask
-from handlers.slack.send_message import send_message_to_channel
-from flask_apscheduler import APScheduler
-import config
 import datetime
+from flask import Flask
+from flask_apscheduler import APScheduler
+
+import config
+from handlers.slack.send_message import send_message_to_channel
 
 app = Flask(__name__)
 scheduler = APScheduler()

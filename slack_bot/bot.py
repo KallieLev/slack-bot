@@ -1,8 +1,8 @@
-from handlers.twitter.twitter_handler import TwitterHandler
 from datetime import datetime, timedelta
-from handlers.twitter.stream_listener import StreamListenerToSlackChannel
-import tweepy as tw
+
 import config
+from handlers.twitter.stream_listener import StreamListenerToSlackChannel
+from handlers.twitter.twitter_handler import TwitterHandler
 
 
 class Bot:
