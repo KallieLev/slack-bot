@@ -15,4 +15,4 @@ class StreamListenerToSlackChannel(tw.StreamListener):
         send_message_to_channel(self.slack_url, self.slack_token, self.slack_channel, text)
 
     def on_error(self, status_code):
-        print('error ' + str(status_code))
+        return False
