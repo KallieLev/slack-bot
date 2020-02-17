@@ -1,6 +1,7 @@
 import tweepy as tw
 import config
 from datetime import datetime
+from external_libs.twitter.stream_listener import StreamListenerToSlackChannel
 
 
 class TwitterHandler:
@@ -30,3 +31,17 @@ class TwitterHandler:
                 curr_tweet = tmp_tweets[i]
 
         return [tweet.text for tweet in tweets]
+
+    def get_users_tweets_from_date(self, users_id: dict, from_date: datetime) -> dict:
+        tweets = {}
+        for user_name, user_id in users_id.items():
+            tweets[user_name] = self.get_user_tweets_from_date(user_id, from_date)
+        return tweets
+
+    def get_user_id_by_name(self, user_name):
+        return self.api.get_user(screen_name=user_name).id
+
+    def create_stream_from_listener(self, stream_listener, **kwargs):
+        stream = tw.Stream(auth=self.auth, listener=stream_listener)
+        stream.filter(**kwargs)
+        return stream

@@ -10,7 +10,7 @@ scheduler.init_app(app)
 scheduler.add_job(id='send current time',
                   func=lambda: send_message_to_channel(config.base_url + config.send_message_endpoint,
                                                        config.slack_token,
-                                                       config.every_hour_message_channel,
+                                                       config.slack_default_channel,
                                                        str(datetime.datetime.now())),
                   trigger='interval', hours=config.hours_interval_of_now)
 scheduler.start()
