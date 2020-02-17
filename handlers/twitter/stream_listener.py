@@ -1,5 +1,5 @@
 import tweepy as tw
-from external_libs.slack.send_message import send_message_to_channel
+from handlers.slack.send_message import send_message_to_channel
 
 
 class StreamListenerToSlackChannel(tw.StreamListener):

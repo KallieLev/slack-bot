@@ -1,7 +1,7 @@
 import tweepy as tw
 import config
 from datetime import datetime
-from external_libs.twitter.stream_listener import StreamListenerToSlackChannel
+from handlers.twitter.stream_listener import StreamListenerToSlackChannel
 
 
 class TwitterHandler:

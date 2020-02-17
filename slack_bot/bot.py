@@ -1,6 +1,6 @@
-from external_libs.twitter.twitter_handler import TwitterHandler
+from handlers.twitter.twitter_handler import TwitterHandler
 from datetime import datetime, timedelta
-from external_libs.twitter.stream_listener import StreamListenerToSlackChannel
+from handlers.twitter.stream_listener import StreamListenerToSlackChannel
 import tweepy as tw
 import config
 
